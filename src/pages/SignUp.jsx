@@ -53,6 +53,8 @@ export const SignUp = () => {
           <input type="text" onChange={handleNameChange} className="name-input" /><br />
           <label>パスワード</label><br />
           <input type="password" onChange={handlePasswordChange} className="password-input" /><br />
+          
+
           <button type="button" onClick={onSignUp} className="signup-button">作成</button>
         </form>
       </main>
