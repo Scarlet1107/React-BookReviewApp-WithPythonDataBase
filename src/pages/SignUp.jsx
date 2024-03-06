@@ -1,5 +1,5 @@
-import "./signUp.scss";
 import { Header } from "../components/Header";
+import "./signUp.scss";
 
 export const SignUp = () => {
   
