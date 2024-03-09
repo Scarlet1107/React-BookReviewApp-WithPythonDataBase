@@ -3,7 +3,7 @@ import Compressor from "compressorjs";
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { signIn } from "../authSlice";
 import { Header } from "../components/Header";
 import { url } from "../const";
@@ -16,62 +16,95 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [icon, setIcon] = useState();
   const [errorMessage, setErrorMessge] = useState();
   const [cookies, setCookie, removeCookie] = useCookies();
-  const [icon, setIcon] = useState();
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
+  const handleIconChange = (e) => { setIcon(e.target.files[0]) };
+
   const onSignUp = () => {
+
+    //ここでemail, name, passwordのバリデーションを行う
+    if (email === "") {
+      setErrorMessge("メールアドレスを入力してください");
+      return;
+    }
+    if (name === "") {
+      setErrorMessge("ユーザ名を入力してください");
+      return;
+    }
+    if (password === "") {
+      setErrorMessge("パスワードを入力してください");
+      return;
+    }
     const data = {
       email: email,
       name: name,
       password: password
     };
 
-    //2024/3/6編集中
-    const iconData = {
-      icon: icon
-
-    };
-
     axios.post(`${url}/users`, data)
       .then((res) => {
         const token = res.data.token;
+        console.log("token is " + token);
         dispatch(signIn());
         setCookie("token", token);
-        navigate.push("/");
       })
       .catch((err) => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`);
       })
+    uploadIcon();
+    if
+      (auth) {
+        console.log("正常にサインアップしました")
+        navigate("/");
+      }
+    else {
+      setErrorMessge("サインアップに失敗しました");
+      return;
+    }
+  };
 
-    if (auth) return <Navigate to="/" />
-  }
 
-  const handleIconChange = (e) => {
-    const file = e.target.files[0];
+  //画像のアップロードを処理
+  const uploadIcon = async () => {
+    const formData = new FormData();
 
-    new Compressor(file, {
-      quality: 0.6, //圧縮品質を0.6に設定
-      success(result) {
-        setIcon(result);　//圧縮後の状態を保存
-      },
-      error(err) {
-        console.log(err);
-      },
+    //画像を圧縮
+    const compressedIcon = await new Promise((resolve, reject) => {
+      new Compressor(icon, {
+        quality: 0.6, //圧縮品質を0.6に設定
+        success(result) {
+          resolve(result);  //圧縮後の状態を"icon"に保存
+        },
+        error(err) {
+          reject(err);
+        },
+      });
     });
 
-    axios.post(`${url}/uploads`, icon,)
-      .then((res) => {
-        const iconUrl = res.data.url;
-        setIcon(iconUrl);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
+    formData.append("icon", compressedIcon);
 
+    try {
+      const response = await axios({
+        method: 'post',
+        url: `${url}/uploads`,
+        data: formData,
+        headers: {
+          'Authorization': `Bearer ${cookies.token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      console.log(response.data);
+    } catch (err) {
+      console.log("画像のアップロードに失敗しました");
+      console.log(err);
+    }
   };
+
+
 
   return (
     <div>
