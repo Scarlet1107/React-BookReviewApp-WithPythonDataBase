@@ -6,6 +6,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { signIn } from "../authSlice";
 import { Header } from "../components/Header";
 import { url } from "../const";
+
 import "./signin.scss";
 
 export const SignIn = () => {
@@ -35,6 +36,7 @@ export const SignIn = () => {
 
   return (
     <div>
+      
       <Header />
       <main className="signin">
         <h2>サインイン</h2>
