@@ -3,7 +3,7 @@ import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "../authSlice";
-import "./header.scss";
+import "../index.css";
 
 export const Header = () => {
 
@@ -23,8 +23,8 @@ export const Header = () => {
 
 
   return (
-    <header className="header">
-      <h1>書籍レビューアプリ</h1>
+    <header className="flex justify-around">
+      <h1 className="font-bold text-4xl ">書籍レビューアプリ</h1>
       {/*もしURLがsigninまたはsignupなら下のsign-out-buttonを表示しない*/}
       {auth ? (
         location.pathname === "/signin" ? null :

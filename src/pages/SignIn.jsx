@@ -6,8 +6,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { signIn } from "../authSlice";
 import { Header } from "../components/Header";
 import { url } from "../const";
-
-import "./signin.scss";
+import "../index.css";
 
 export const SignIn = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
@@ -36,10 +35,10 @@ export const SignIn = () => {
 
   return (
     <div>
-      
+
       <Header />
-      <main className="signin">
-        <h2>サインイン</h2>
+      <main>
+        <h3 className="font-bold text-2xl m-8 ">サインイン</h3>
         <p className="error-message">{errorMessage}</p>
         <form className="signin-form">
           <label className="email-label">メールアドレス</label>
