@@ -1,6 +1,6 @@
 import axios from "axios";
 import Compressor from "compressorjs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -24,11 +24,25 @@ export const SignUp = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value);
   const handleIconChange = (e) => { setIcon(e.target.files[0]) };
 
-  const onSignUp = () => {
+  useEffect(() => {
+    if (auth) {
+      console.log("正常にサインアップしました");
+      navigate("/");
+    } else {
+      console.log("authがfalseです");
+    }
+  }, [auth]);
+
+  const onSignUp = async () => {
 
     //ここでemail, name, passwordのバリデーションを行う
-    if (email === "") {
+    if (email === ""){
       setErrorMessge("メールアドレスを入力してください");
+      return;
+    }
+    if(validateEmail(email) === false)
+    {
+      setErrorMessge("メールアドレスの形式が正しくありません");
       return;
     }
     if (name === "") {
@@ -39,37 +53,52 @@ export const SignUp = () => {
       setErrorMessge("パスワードを入力してください");
       return;
     }
+    if(icon === undefined){
+      setErrorMessge("アイコンを選択してください");
+      return;
+    }
+    console.log("バリデーションチェック完了")
     const data = {
       email: email,
       name: name,
       password: password
     };
 
-    axios.post(`${url}/users`, data)
-      .then((res) => {
+    await axios.post(`${url}/users`, data)
+      .then(async (res) => {
         const token = res.data.token;
+        console.log("アカウント作成に成功しました");
         console.log("token is " + token);
         dispatch(signIn());
         setCookie("token", token);
+        await uploadIcon(token);
+        console.log("アイコンのアップロードが完了しました");
       })
       .catch((err) => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`);
-      })
-    uploadIcon();
+      });
+
     if
       (auth) {
-        console.log("正常にサインアップしました")
-        navigate("/");
-      }
+      console.log("正常にサインアップしました")
+      navigate("/");
+    }
     else {
       setErrorMessge("サインアップに失敗しました");
+      console.log("authがfalseです");
       return;
     }
   };
 
+  //メールアドレスのバリデーションチェックを行う関数
+  const validateEmail = (email) => {
+    console.log("validateEmail関数が呼ばれました");
+    const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return re.test(email);
+  };
 
   //画像のアップロードを処理
-  const uploadIcon = async () => {
+  const uploadIcon = async (token) => {
     const formData = new FormData();
 
     //画像を圧縮
@@ -86,14 +115,16 @@ export const SignUp = () => {
     });
 
     formData.append("icon", compressedIcon);
+    console.log("画像の圧縮が完了しました")
 
     try {
+      console.log("token ID " + token + "を使用して画像をアップロードします");
       const response = await axios({
         method: 'post',
         url: `${url}/uploads`,
         data: formData,
         headers: {
-          'Authorization': `Bearer ${cookies.token}`,
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
         }
       });

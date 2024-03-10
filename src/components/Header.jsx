@@ -13,6 +13,8 @@ export const Header = () => {
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies();
 
+
+
   const handleSignOut = () => {
     dispatch(signOut());
     removeCookie("token");
@@ -25,11 +27,12 @@ export const Header = () => {
       <h1>書籍レビューアプリ</h1>
       {/*もしURLがsigninまたはsignupなら下のsign-out-buttonを表示しない*/}
       {auth ? (
+        location.pathname === "/signin" ? null :
         <button className="sign-out-button" onClick={handleSignOut}>
           サインアウト
         </button>
       ) : (
-        (location.pathname === "/signin") ? 
+        location.pathname === "/signin" ? 
         <button type="button" onClick={() => navigate("/signup")} className="switch-button">アカウントを新規作成</button> : 
           <button type="button" onClick={() => navigate("/signin")} className="switch-button">サインイン</button>
       )}
