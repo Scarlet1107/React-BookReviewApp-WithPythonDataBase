@@ -38,26 +38,26 @@ export const SignIn = () => {
 
       <Header />
       <main>
-        <h3 className="font-bold text-2xl m-8 ">サインイン</h3>
-        <p className="error-message">{errorMessage}</p>
-        <form className="signin-form">
-          <label className="email-label">メールアドレス</label>
+        <h3 className="font-bold text-3xl m-8">サインイン</h3>
+        <p className="error-message mb-8">{errorMessage}</p>
+        <form className="">
+          <label className="">メールアドレス</label>
           <br />
           <input
             type="email"
-            className="email-input"
+            className="input-box"
             onChange={handleEmailChange}
           />
           <br />
-          <label className="password-label">パスワード</label>
+          <label className="">パスワード</label>
           <br />
           <input
             type="password"
-            className="password-input"
+            className="input-box"
             onChange={handlePasswordChange}
           />
           <br />
-          <button type="button" className="signin-button" onClick={onSignIn}>
+          <button type="button" className="button bg-blue-500 p-4" onClick={onSignIn}>
             サインイン
           </button>
         </form>

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { signIn } from "../authSlice";
 import { Header } from "../components/Header";
 import { url } from "../const";
-import "./signUp.scss";
 
 export const SignUp = () => {
   const navigate = useNavigate();
@@ -22,7 +21,9 @@ export const SignUp = () => {
   const handleEmailChange = (e) => setEmail(e.target.value);
   const handleNameChange = (e) => setName(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
-  const handleIconChange = (e) => { setIcon(e.target.files[0]) };
+  const handleIconChange = (e) => {
+    setIcon(e.target.files[0]);
+  };
 
   useEffect(() => {
     if (auth) {
@@ -34,14 +35,12 @@ export const SignUp = () => {
   }, [auth]);
 
   const onSignUp = async () => {
-
     //ここでemail, name, passwordのバリデーションを行う
-    if (email === ""){
+    if (email === "") {
       setErrorMessge("メールアドレスを入力してください");
       return;
     }
-    if(validateEmail(email) === false)
-    {
+    if (validateEmail(email) === false) {
       setErrorMessge("メールアドレスの形式が正しくありません");
       return;
     }
@@ -53,18 +52,19 @@ export const SignUp = () => {
       setErrorMessge("パスワードを入力してください");
       return;
     }
-    if(icon === undefined){
+    if (icon === undefined) {
       setErrorMessge("アイコンを選択してください");
       return;
     }
-    console.log("バリデーションチェック完了")
+    console.log("バリデーションチェック完了");
     const data = {
       email: email,
       name: name,
-      password: password
+      password: password,
     };
 
-    await axios.post(`${url}/users`, data)
+    await axios
+      .post(`${url}/users`, data)
       .then(async (res) => {
         const token = res.data.token;
         console.log("アカウント作成に成功しました");
@@ -78,12 +78,10 @@ export const SignUp = () => {
         setErrorMessge(`サインアップに失敗しました。 ${err}`);
       });
 
-    if
-      (auth) {
-      console.log("正常にサインアップしました")
+    if (auth) {
+      console.log("正常にサインアップしました");
       navigate("/");
-    }
-    else {
+    } else {
       setErrorMessge("サインアップに失敗しました");
       console.log("authがfalseです");
       return;
@@ -106,7 +104,7 @@ export const SignUp = () => {
       new Compressor(icon, {
         quality: 0.6, //圧縮品質を0.6に設定
         success(result) {
-          resolve(result);  //圧縮後の状態を"icon"に保存
+          resolve(result); //圧縮後の状態を"icon"に保存
         },
         error(err) {
           reject(err);
@@ -115,18 +113,18 @@ export const SignUp = () => {
     });
 
     formData.append("icon", compressedIcon);
-    console.log("画像の圧縮が完了しました")
+    console.log("画像の圧縮が完了しました");
 
     try {
       console.log("token ID " + token + "を使用して画像をアップロードします");
       const response = await axios({
-        method: 'post',
+        method: "post",
         url: `${url}/uploads`,
         data: formData,
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       });
       console.log(response.data);
     } catch (err) {
@@ -135,28 +133,52 @@ export const SignUp = () => {
     }
   };
 
-
-
   return (
     <div>
       <Header />
-      <main className="signup">
-        <h2>新規作成</h2>
-        <p className="error-message">{errorMessage}</p>
-        <form className="signup-form">
-          <label>メールアドレス</label><br />
-          <input type="email" onChange={handleEmailChange} className="email-input" /><br />
-          <label>ユーザ名</label><br />
-          <input type="text" onChange={handleNameChange} className="name-input" /><br />
-          <label>パスワード</label><br />
-          <input type="password" onChange={handlePasswordChange} className="password-input" /><br />
-
-          <p>アイコンをアップロード</p>
-          <input type="file" onChange={handleIconChange} className="file-input" />
-
-          <button type="button" onClick={onSignUp} className="signup-button">作成</button>
+      <main className="w-500">
+        <h2 className="text-3xl m-8">新規作成</h2>
+        <p className="error-message mb-8">{errorMessage}</p>
+        <form>
+          <label className="m-8">メールアドレス</label>
+          <br />
+          <input
+            type="email"
+            onChange={handleEmailChange}
+            className="input-box"
+          />
+          <br />
+          <label>ユーザ名</label>
+          <br />
+          <input
+            type="text"
+            onChange={handleNameChange}
+            className="input-box"
+          />
+          <br />
+          <label className="">パスワード</label>
+          <br />
+          <input
+            type="password"
+            onChange={handlePasswordChange}
+            className="input-box"
+          />
+          <br />
+          <p className="mt-4 mb-2 ">アイコンをアップロード</p>
+          <input
+            type="file"
+            onChange={handleIconChange}
+            className="file-input"
+          />{" "}
+          <button
+            type="button"
+            onClick={onSignUp}
+            className="button bg-blue-500 px-8 py-4"
+          >
+            作成
+          </button>
         </form>
       </main>
     </div>
-  )
-}
+  );
+};

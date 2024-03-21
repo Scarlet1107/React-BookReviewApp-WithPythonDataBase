@@ -23,18 +23,18 @@ export const Header = () => {
 
 
   return (
-    <header className="flex justify-around">
-      <h1 className="font-bold text-4xl ">書籍レビューアプリ</h1>
+    <header className="flex justify-around bg-blue-400">
+      <h1 className="font-bold text-4xl p-8 mr-32">書籍レビューアプリ</h1>
       {/*もしURLがsigninまたはsignupなら下のsign-out-buttonを表示しない*/}
       {auth ? (
         location.pathname === "/signin" ? null :
-        <button className="sign-out-button" onClick={handleSignOut}>
+        <button className="button ml-32 text-xl" onClick={handleSignOut}>
           サインアウト
         </button>
       ) : (
         location.pathname === "/signin" ? 
-        <button type="button" onClick={() => navigate("/signup")} className="switch-button">アカウントを新規作成</button> : 
-          <button type="button" onClick={() => navigate("/signin")} className="switch-button">サインイン</button>
+        <button type="button" onClick={() => navigate("/signup")} className="button ml-32 text-xl">アカウントを新規作成</button> : 
+          <button type="button" onClick={() => navigate("/signin")} className="button ml-32 text-xl">アカウントをお持ちの方</button>
       )}
     </header>
   );
