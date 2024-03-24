@@ -177,7 +177,7 @@ export const SignUp = () => {
           >
             作成
           </button>
-        </form>
+        </form> 
       </main>
     </div>
   );
