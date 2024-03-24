@@ -179,6 +179,6 @@ export const SignUp = () => {
           </button>
         </form> 
       </main>
-    </div> 
+    </div>  
   );
 };
