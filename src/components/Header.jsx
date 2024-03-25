@@ -36,6 +36,6 @@ export const Header = () => {
         <button type="button" onClick={() => navigate("/signup")} className="button ml-32 text-xl">アカウントを新規作成</button> : 
           <button type="button" onClick={() => navigate("/signin")} className="button ml-32 text-xl">アカウントをお持ちの方</button>
       )}
-    </header>
+    </header>  
   );
 };
