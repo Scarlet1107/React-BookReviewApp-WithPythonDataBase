@@ -28,12 +28,12 @@ export const SignIn = () => {
       })
       .catch((err) => {
         setErrorMessage(`サインインに失敗しました。${err}`);
-      });
+      });     
   };
 
   if (auth) return <Navigate to="/" />;
 
-  return (
+  return ( 
     <div>
 
       <Header />
@@ -56,12 +56,12 @@ export const SignIn = () => {
             className="input-box"
             onChange={handlePasswordChange}
           />
-          <br />
+          <br />  
           <button type="button" className="button bg-blue-500 p-4" onClick={onSignIn}>
-            サインイン
-          </button>
-        </form>
+            サインイン  
+          </button>   
+        </form>   
       </main>
-    </div>
+    </div>   
   );
 };
