@@ -55,7 +55,7 @@ const BookReviewList = () => {
 
       {/* ページネーション */}
 
-      <div className="grid grid-cols-9 gap-4 text-xl mt-12">
+      <div className="grid grid-cols-11 gap-4 text-xl mt-12">
         {page >= 3 && (
           <button className="col-start-3" onClick={() => setPage(1)}>
             最初のページ
@@ -65,12 +65,12 @@ const BookReviewList = () => {
         {page > 1 && (
           <button
             onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 1
-            className="col-start-4"
+            className="col-start-5"
           >
             前のページ
           </button>
         )}
-        <p className="col-start-5 font-bold">{page}</p> 
+        <p className="col-start-6 font-bold">{page}</p> 
         <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
       </div>
     </div>
