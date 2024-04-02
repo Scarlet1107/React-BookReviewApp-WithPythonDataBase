@@ -2,6 +2,9 @@ import React from "react";
 import useSWR from "swr";
 import { useCookies } from "react-cookie";
 
+// SWRを使用して、本の一覧を取得するコンポーネント
+// Home.jsxで使用
+
 const BookReviewList = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["token"]);
