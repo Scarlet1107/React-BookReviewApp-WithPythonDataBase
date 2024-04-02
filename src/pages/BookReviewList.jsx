@@ -1,6 +1,7 @@
-import React from "react";
 import useSWR from "swr";
 import { useCookies } from "react-cookie";
+import { useState } from "react";
+import React from "react";
 
 // SWRを使用して、本の一覧を取得するコンポーネント
 // Home.jsxで使用
@@ -8,6 +9,7 @@ import { useCookies } from "react-cookie";
 const BookReviewList = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["token"]);
+  const [page, setPage] = useState(1);
 
   async function fetcher(key) {
     const res = await fetch(key, {
@@ -19,7 +21,10 @@ const BookReviewList = () => {
     return res.json();
   }
 
-  const { data, error } = useSWR(`${apiUrl}/books`, fetcher);
+  const { data, error } = useSWR(
+    `${apiUrl}/books?offset=${page * 10}`,
+    fetcher
+  );
   if (error) {
     console.log(error);
     return (
@@ -27,20 +32,37 @@ const BookReviewList = () => {
         Error : レビュー情報の取得に失敗しました
       </div>
     );
-  } else if (!data) return <div>Now loading...</div>;
+  } else if (!data) return <div className="text-8xl">Now loading...</div>;
 
   return (
-    <div className="grid grid-cols-5 gap-10 px-12">
-      {data &&
-        data.map((book) => (
-          <div
-            key={book.id}
-            className="flex flex-col items-center justify-center p-4 border rounded shadow h-24 transform transition duration-50 ease-in-out hover:scale-105 hover:shadow-lg"
-          >
-            <h2 className="text-xl">{book.title}</h2>
-            <p>{book.author}</p>
-          </div>
-        ))}
+    <div>
+      <div className="grid grid-cols-5 gap-10 px-12">
+        {data &&
+          data.map((book) => (
+            <div
+              key={book.id}
+              className="flex flex-col items-center justify-center p-4 border rounded shadow h-24 transform transition duration-50 ease-in-out hover:scale-105 hover:shadow-lg overflow-hidden"
+            >
+                {/* 長過ぎるタイトルは”タイトル...”みたいに省略して書きたい */}
+              <h2 className="text-xl text-overflow-ellipsis">{book.title.substring(0, 20)}</h2>
+              <p>{book.author}</p>
+            </div>
+          ))}
+      </div>
+      <div className="text-xl flex justify-center mt-8">
+        {page >1 && (
+        
+        <button
+          className=""
+          onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 1
+        >
+            前のページ        
+        </button>
+        )}
+        <p className="text-2xl mx-16">{page}</p>
+        <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
+      </div>
+
     </div>
   );
 };
