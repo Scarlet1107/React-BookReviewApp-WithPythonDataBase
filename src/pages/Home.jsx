@@ -1,14 +1,15 @@
 import React from "react";
 import { Header } from "../components/Header";
-export const Home = () => {
-    
-    return (
-        <div>
-            <Header />
-            <h1 className="text-6xl m-8">Home</h1>
-            <h2 className="text-4xl m-8">ここに書籍レビューの一覧を表示する</h2>
-        </div>
-    );
-}
+import BookReviewList from "./BookReviewList";
 
-export default Home; 
+export const Home = () => {
+  return (
+    <div>
+      <Header />
+      <h1 className="text-5xl mt-12 mb-24">書籍レビュー 一覧</h1>
+      <BookReviewList />
+    </div>
+  );
+};
+
+export default Home;
