@@ -36,6 +36,7 @@ const BookReviewList = () => {
 
   return (
     <div>
+      {/* 書籍レビュー一覧 */}
       <div className="grid grid-cols-5 gap-10 px-12">
         {data &&
           data.map((book) => (
@@ -43,26 +44,34 @@ const BookReviewList = () => {
               key={book.id}
               className="flex flex-col items-center justify-center p-4 border rounded shadow h-24 transform transition duration-50 ease-in-out hover:scale-105 hover:shadow-lg overflow-hidden"
             >
-                {/* 長過ぎるタイトルは”タイトル...”みたいに省略して書きたい */}
-              <h2 className="text-xl text-overflow-ellipsis">{book.title.substring(0, 20)}</h2>
+              {/* 長過ぎるタイトルは”タイトル...”みたいに省略して書きたい */}
+              <h2 className="text-xl text-overflow-ellipsis">
+                {book.title.substring(0, 20)}
+              </h2>
               <p>{book.author}</p>
             </div>
           ))}
       </div>
+
+      {/* ページネーション */}
+
       <div className="text-xl flex justify-center mt-8">
-        {page >1 && (
-        
-        <button
-          className=""
-          onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 1
-        >
-            前のページ        
-        </button>
+        {page >= 3 && (
+          <button className="mx-12 flex" onClick={() => setPage(1)}>
+            最初のページ
+          </button>
         )}
-        <p className="text-2xl mx-16">{page}</p>
+
+        {page > 1 && (
+          <button
+            onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 1
+          >
+            前のページ
+          </button>
+        )}
+        <p className="text-2xl mx-16">{page}</p> 
         <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
       </div>
-
     </div>
   );
 };
