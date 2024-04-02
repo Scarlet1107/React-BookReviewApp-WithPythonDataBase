@@ -55,9 +55,9 @@ const BookReviewList = () => {
 
       {/* ページネーション */}
 
-      <div className="text-xl flex justify-center mt-8">
+      <div className="grid grid-cols-9 gap-4 text-xl mt-12">
         {page >= 3 && (
-          <button className="mx-12 flex" onClick={() => setPage(1)}>
+          <button className="col-start-3" onClick={() => setPage(1)}>
             最初のページ
           </button>
         )}
@@ -65,11 +65,12 @@ const BookReviewList = () => {
         {page > 1 && (
           <button
             onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 1
+            className="col-start-4"
           >
             前のページ
           </button>
         )}
-        <p className="text-2xl mx-16">{page}</p> 
+        <p className="col-start-5 font-bold">{page}</p> 
         <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
       </div>
     </div>
