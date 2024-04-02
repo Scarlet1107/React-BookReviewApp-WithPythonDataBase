@@ -29,19 +29,20 @@ const BookReviewList = () => {
     );
   } else if (!data) return <div>Now loading...</div>;
 
-
-    return (
-        <div className="grid grid-cols-5 gap-10 px-12">
-          {data &&
-            data.map((book) => (
-              <div key={book.id} className="p-4 border rounded shadow">
-                <h2 className="text-xl">{book.title}</h2>
-                <p>{book.author}</p>
-              </div>
-            ))}
-        </div>
-      );
-
+  return (
+    <div className="grid grid-cols-5 gap-10 px-12">
+      {data &&
+        data.map((book) => (
+          <div
+            key={book.id}
+            className="flex flex-col items-center justify-center p-4 border rounded shadow h-24 transform transition duration-50 ease-in-out hover:scale-105 hover:shadow-lg"
+          >
+            <h2 className="text-xl">{book.title}</h2>
+            <p>{book.author}</p>
+          </div>
+        ))}
+    </div>
+  );
 };
 
 export default BookReviewList;
