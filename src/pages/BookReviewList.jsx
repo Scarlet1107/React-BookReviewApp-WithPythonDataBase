@@ -25,6 +25,7 @@ const BookReviewList = () => {
     `${apiUrl}/books?offset=${page * 10}`,
     fetcher
   );
+  const isLastPage = data && data.length < 10;
   if (error) {
     console.log(error);
     return (
@@ -45,10 +46,11 @@ const BookReviewList = () => {
               className="flex flex-col items-center justify-center p-4 border rounded shadow h-24 transform transition duration-50 ease-in-out hover:scale-105 hover:shadow-lg overflow-hidden"
             >
               {/* 長過ぎるタイトルは”タイトル...”みたいに省略して書きたい */}
-              <h2 className="text-xl text-overflow-ellipsis">
-                {book.title.substring(0, 20)}
+              <h2 className="text-xl">
+                {book.title.length >= 25
+                  ? book.title.slice(0, 25) + "..."
+                  : book.title}
               </h2>
-              <p>{book.author}</p>
             </div>
           ))}
       </div>
@@ -70,8 +72,10 @@ const BookReviewList = () => {
             前のページ
           </button>
         )}
-        <p className="col-start-6 font-bold">{page}</p> 
-        <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
+        <p className="col-start-6 font-bold">{page}</p>
+        {!isLastPage && (
+          <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
+        )}
       </div>
     </div>
   );
