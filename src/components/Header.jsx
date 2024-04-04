@@ -45,23 +45,36 @@ export const Header = () => {
 
   return (
     <header className="flex justify-around bg-blue-400">
-      <h1 className="justify-start font-bold text-4xl p-8">
+      <h1
+        className="justify-start font-bold text-4xl p-8 cursor-pointer"
+        onClick={() => navigate("/")}
+      >
         書籍レビューアプリ
       </h1>
       <div className="flex">
         {auth && (
-          <div className="py-2 px-4 m-8 text-xl">
-            おかえりなさい！<span className="font-bold"> {data && data.name} </span>さん
+          <div className="py-2 px-4 m-8 text-xl ">
+            おかえりなさい！
+            <span className="font-bold"> {data && data.name} </span>さん
           </div>
         )}
-        {/*もしURLがsigninまたはsignupなら下のsign-out-buttonを表示しない*/}
+        {/*ウェルカムページ、、ログインページ、ログイン後のページのそれぞれに対応するヘッダーを表示*/}
         {auth ? (
           location.pathname === "/signin" ? null : (
             <button className="button text-xl" onClick={handleSignOut}>
               サインアウト
             </button>
           )
-        ) : location.pathname === "/signin" ? (
+        ) : location.pathname === "/" ? 
+        <button
+        type="button"
+        onClick={() => navigate("/signin")}
+        className="button text-xl"
+        >
+          サインイン
+        </button>
+        : location.pathname ===
+          "/signin" ? (
           <button
             type="button"
             onClick={() => navigate("/signup")}
