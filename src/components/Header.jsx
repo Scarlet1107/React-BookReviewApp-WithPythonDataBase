@@ -40,7 +40,8 @@ export const Header = () => {
   const handleSignOut = () => {
     dispatch(signOut());
     removeCookie("token");
-    navigate("/signin");
+    alert("サインアウトしました");
+    window.location.reload();
   };
 
   return (
@@ -65,16 +66,18 @@ export const Header = () => {
               サインアウト
             </button>
           )
-        ) : location.pathname === "/" ? 
-        <button
-        type="button"
-        onClick={() => navigate("/signin")}
-        className="button text-xl"
-        >
-          サインイン
-        </button>
-        : location.pathname ===
-          "/signin" ? (
+        ) : location.pathname === "/" ? (
+          <div className="flex">
+            <div className="py-2 px-4 m-8 text-xl">現在<span className="font-bold"> ゲスト </span>として参加しています</div>
+            <button
+              type="button"
+              onClick={() => navigate("/signin")}
+              className="button text-xl"
+            >
+              サインイン
+            </button>
+          </div>
+        ) : location.pathname === "/signin" ? (
           <button
             type="button"
             onClick={() => navigate("/signup")}

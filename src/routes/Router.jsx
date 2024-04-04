@@ -12,16 +12,18 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/" element={<WelcomePage />} />
         {auth ? (
           <>
             <Route path="/home" element={<Home />} />
             <Route path="*" element={<Navigate to="/home" />} />
           </>
         ) : (
-          <Route path="*" element={<Navigate to="/" />} />
+          <>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </>
         )}
       </Routes>
     </BrowserRouter>

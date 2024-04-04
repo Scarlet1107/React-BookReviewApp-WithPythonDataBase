@@ -37,7 +37,7 @@ const BookReviewList = () => {
 
   return (
     <div>
-      {/* 書籍レビュー一覧 */}
+      <h1 className="text-5xl mt-12 mb-24">書籍レビュー 一覧</h1>
       <div className="grid grid-cols-5 gap-10 px-12">
         {data &&
           data.map((book) => (
@@ -57,6 +57,7 @@ const BookReviewList = () => {
 
       {/* ページネーション */}
 
+      
       <div className="grid grid-cols-11 gap-4 text-xl mt-12">
         {page >= 3 && (
           <button className="col-start-3" onClick={() => setPage(1)}>
