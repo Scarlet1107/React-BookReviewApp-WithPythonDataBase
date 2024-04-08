@@ -6,7 +6,7 @@ import SWR from "swr";
 
 export const WelcomePage = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   async function fetcher(key) {
     const res = await fetch(key);
@@ -56,12 +56,12 @@ export const WelcomePage = () => {
       
             <div className="grid grid-cols-11 gap-4 text-xl mt-12">
         {page >= 3 && (
-          <button className="col-start-3" onClick={() => setPage(1)}>
+          <button className="col-start-3" onClick={() => setPage(0)}>
             最初のページ
           </button>
         )}
 
-        {page > 1 && (
+        {page > 0 && (
           <button
             onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 1
             className="col-start-5"
