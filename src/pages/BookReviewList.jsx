@@ -2,6 +2,7 @@ import useSWR from "swr";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
 import React from "react";
+import Pagination from "./Pagination";
 
 // SWRを使用して、本の一覧を取得するコンポーネント
 // Home.jsxで使用
@@ -54,31 +55,8 @@ const BookReviewList = () => {
             </div>
           ))}
       </div>
-
-      {/* ページネーション */}
-
-      
-      <div className="grid grid-cols-11 gap-4 text-xl mt-12">
-        {page >= 3 && (
-          <button className="col-start-3" onClick={() => setPage(0)}>
-            最初のページ
-          </button>
-        )}
-
-        {page > 0 && (
-          <button
-            onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 0
-            className="col-start-5"
-          >
-            前のページ
-          </button>
-        )}
-        <p className="col-start-6 font-bold">{page}</p>
-        {!isLastPage && (
-          <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
-        )}
-      </div>
-    </div>
+<Pagination data={data} page={page} setPage={setPage} />
+          </div>
   );
 };
 

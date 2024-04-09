@@ -3,10 +3,13 @@ import "../index.css";
 import { Header } from "../components/Header";
 import { useState } from "react";
 import SWR from "swr";
+import Pagination from "./Pagination";
+
+
 
 export const WelcomePage = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0);  
 
   async function fetcher(key) {
     const res = await fetch(key);
@@ -27,7 +30,7 @@ export const WelcomePage = () => {
     );
   } else if (!data) return <div className="text-8xl">Now loading...</div>;
 
-  const isLastPage = data && data.length < 10;
+  
 
   return (
     <>
@@ -51,29 +54,7 @@ export const WelcomePage = () => {
             </div>
           ))}
       </div>
-            {/* ページネーション */}
-
-      
-            <div className="grid grid-cols-11 gap-4 text-xl mt-12">
-        {page >= 3 && (
-          <button className="col-start-3" onClick={() => setPage(0)}>
-            最初のページ
-          </button>
-        )}
-
-        {page > 0 && (
-          <button
-            onClick={() => setPage((old) => Math.max(old - 1, 1))} // Ensure page doesn't go below 1
-            className="col-start-5"
-          >
-            前のページ
-          </button>
-        )}
-        <p className="col-start-6 font-bold">{page}</p>
-        {!isLastPage && (
-          <button onClick={() => setPage((old) => old + 1)}>次のページ</button>
-        )}
-      </div>
+                  <Pagination data={data} page ={page} setPage={setPage} />
     </>
   );
 };
