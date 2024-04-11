@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "../authSlice";
 import SWR from "swr";
 import "../index.css";
+import { useContext } from "react";
 
 export const Header = () => {
   const location = useLocation();
@@ -12,7 +13,6 @@ export const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-
   const apiUrl = process.env.REACT_APP_API_URL;
 
   async function fetcher(key) {
@@ -34,6 +34,13 @@ export const Header = () => {
       );
     } else if (!data) {
       return <div className="text-4xl p-8 bg-blue-400">Now loading...</div>;
+    } else {
+      console.log(data.name + "を取得しました");
+      const UserNameContext = React.createContext(data.name);
+
+      // You can now use the UserNameContext in other components by importing it
+      // For example:
+      // import { UserNameContext } from "../path/to/UserNameContext";
     }
   }
 
@@ -42,6 +49,10 @@ export const Header = () => {
     removeCookie("token");
     alert("サインアウトしました");
     window.location.reload();
+  };
+
+  const handleEditProfile = () => {
+    navigate("/profile");
   };
 
   return (
@@ -56,7 +67,14 @@ export const Header = () => {
         {auth && (
           <div className="py-2 px-4 m-8 text-xl ">
             おかえりなさい！
-            <span className="font-bold"> {data && data.name} </span>さん
+            <span
+              className="font-bold cursor-pointer"
+              onClick={() => handleEditProfile()}
+            >
+              {" "}
+              {data && data.name}{" "}
+            </span>
+            さん
           </div>
         )}
         {/*ウェルカムページ、、ログインページ、ログイン後のページのそれぞれに対応するヘッダーを表示*/}
@@ -68,7 +86,10 @@ export const Header = () => {
           )
         ) : location.pathname === "/" ? (
           <div className="flex">
-            <div className="py-2 px-4 m-8 text-xl">現在<span className="font-bold"> ゲスト </span>として参加しています</div>
+            <div className="py-2 px-4 m-8 text-xl">
+              現在<span className="font-bold"> ゲスト </span>
+              として参加しています
+            </div>
             <button
               type="button"
               onClick={() => navigate("/signin")}
