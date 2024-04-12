@@ -6,6 +6,7 @@ import { SignIn } from "../pages/SignIn";
 import { SignUp } from "../pages/SignUp";
 import { WelcomePage } from "../pages/WelcomePage";
 import { Profile } from "../pages/Profile";
+import { NewReview } from "../pages/NewReview";
 
 export const Router = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
@@ -17,6 +18,7 @@ export const Router = () => {
           <>
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/new" element={<NewReview />} />
             <Route path="*" element={<Navigate to="/home" />} />
           </>
         ) : (

@@ -38,7 +38,9 @@ const BookReviewList = () => {
 
   return (
     <div>
-      <h1 className="text-5xl mt-12 mb-24">書籍レビュー 一覧</h1>
+        <h1 className=" text-center text-5xl mt-12 mb-24">書籍レビュー 一覧
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-auto rounded h-1/2">レビューを投稿する</button>
+    </h1>
       <div className="grid grid-cols-5 gap-10 px-12">
         {data &&
           data.map((book) => (
@@ -55,8 +57,8 @@ const BookReviewList = () => {
             </div>
           ))}
       </div>
-<Pagination data={data} page={page} setPage={setPage} />
-          </div>
+      <Pagination data={data} page={page} setPage={setPage} />
+    </div>
   );
 };
 
