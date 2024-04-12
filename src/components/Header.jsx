@@ -40,7 +40,7 @@ export const Header = () => {
 
       // You can now use the UserNameContext in other components by importing it
       // For example:
-      // import { UserNameContext } from "../path/to/UserNameContext";
+      // import { UserNameContext } from "../path/to/UserNameContext";  
     }
   }
 

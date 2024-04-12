@@ -3,12 +3,38 @@ import { Header } from "../components/Header";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Profile = () => {
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["token"]);
   const [newUsername, setNewUsername] = useState("");
+  const [userName, setUsername] = useState("");
+
+  useEffect(() => {
+    //get user name from apiUrl/users by using fetch
+    const fetchUserName = async () => {
+      try {
+        const res = await fetch(`${apiUrl}/users`, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+        });
+        if (!res.ok) {
+          // Handle error
+          console.error("Failed to fetch user name");
+          return;
+        }
+        const data = await res.json();
+        setUsername(data.name);
+      } catch (error) {
+        console.error("Failed to fetch user name", error);
+      }
+    };
+    fetchUserName();
+  }, [apiUrl, cookies.token]);
 
   const handleEditProfile = async (newUsername) => {
     if (newUsername === "") return;
@@ -40,7 +66,7 @@ export const Profile = () => {
           className="bg-gray-200 px-4 py-2 rounded w-50% mr-10"
           type="text"
           onChange={(e) => setNewUsername(e.target.value)}
-          placeholder=""
+          placeholder={userName}
         />
         <button
           onClick={() => handleEditProfile(newUsername)}
