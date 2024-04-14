@@ -9,7 +9,6 @@ export const Profile = () => {
   const navigate = useNavigate();
   const apiUrl = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["token"]);
-  const [newUsername, setNewUsername] = useState("");
   const [userName, setUsername] = useState("");
 
   useEffect(() => {
@@ -36,15 +35,15 @@ export const Profile = () => {
     fetchUserName();
   }, [apiUrl, cookies.token]);
 
-  const handleEditProfile = async (newUsername) => {
-    if (newUsername === "") return;
+  const handleEditProfile = async (userName) => {
+    if (userName === "") return;
     const res = await fetch(`${apiUrl}/users`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${cookies.token}`,
       },
-      body: JSON.stringify({ name: newUsername }),
+      body: JSON.stringify({ name: userName }),
     });
     if (!res.ok) {
       // Handle error
@@ -65,11 +64,11 @@ export const Profile = () => {
         <input
           className="bg-gray-200 px-4 py-2 rounded w-50% mr-10"
           type="text"
-          onChange={(e) => setNewUsername(e.target.value)}
-          placeholder={userName}
+          onChange={(e) => setUsername(e.target.value)}
+          value = {userName}
         />
         <button
-          onClick={() => handleEditProfile(newUsername)}
+          onClick={() => handleEditProfile(userName)}
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           名前を変える

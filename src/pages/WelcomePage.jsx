@@ -5,8 +5,6 @@ import { useState } from "react";
 import SWR from "swr";
 import Pagination from "./Pagination";
 
-
-
 export const WelcomePage = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [page, setPage] = useState(0);  

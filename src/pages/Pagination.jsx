@@ -1,16 +1,14 @@
-import React from 'react'
-import { useState } from 'react'
+import React from "react";
+import { useState } from "react";
 
-const Pagination = ({data, page, setPage}) => {
-
-    const isLastPage = data && data.length < 10;
+const Pagination = ({ data, page, setPage }) => {
+  const isLastPage = data && data.length < 10;
 
   return (
     <div>
-                  {/* ページネーション */}
+      {/* ページネーション */}
 
-      
-                  <div className="grid grid-cols-11 gap-4 text-xl mt-12">
+      <div className="grid grid-cols-11 gap-4 text-xl mt-12">
         {page >= 3 && (
           <button className="col-start-3" onClick={() => setPage(0)}>
             最初のページ
@@ -31,7 +29,7 @@ const Pagination = ({data, page, setPage}) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Pagination
+export default Pagination;
