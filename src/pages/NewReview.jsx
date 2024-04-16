@@ -26,6 +26,10 @@ export const NewReview = () => {
     setReview(e);
   };
 
+  const handleUrlChange = (e) => {
+    setUrl(e);
+  };
+
   const handleSubmit = async () => {
     console.log("cookies.token = ", cookies.token);
     if (bookName === "") {
@@ -38,6 +42,14 @@ export const NewReview = () => {
     }
     if (review === "") {
       alert("レビューを入力してください");
+      return;
+    }
+    if (url === "") {
+      alert("URLを入力してください");
+      return;
+    }
+    if (!url.startsWith("http://") && !url.startsWith("https://")) {
+      alert("URLを正しい形で入力してください");
       return;
     }
     const res = await fetch(`${apiUrl}/books`, {
@@ -65,8 +77,9 @@ export const NewReview = () => {
   return (
     <>
       <Header />
-      <div className="mt-8 flex h-dvh">
-        <div className="flex flex-col items-center space-y-6 w-2/3">
+      <div className="mt-8 flex h-dvh justify-start">
+        {/* ここのmlを後で修正 */}
+        <div className="flex flex-col items-start space-y-6 w-2/3 ml-10">
           <input
             className="bg-gray-200 px-4 py-2 rounded w-1/3"
             type="text"
@@ -84,6 +97,12 @@ export const NewReview = () => {
             type="text"
             onChange={(e) => handleReviewChange(e.target.value)}
             placeholder="レビュー"
+          />
+          <input
+            className="bg-gray-200 px-4 py-2 rounded w-1/3"
+            type="text"
+            onChange={(e) => handleUrlChange(e.target.value)}
+            placeholder="URL"
           />
         </div>
         <div className="w-1/3">

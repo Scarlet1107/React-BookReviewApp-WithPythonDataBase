@@ -58,7 +58,7 @@ export const Header = () => {
   return (
     <header className="flex justify-around bg-blue-400">
       <h1
-        className="justify-start font-bold text-4xl p-8 cursor-pointer"
+        className="justify-start font-bold text-2xl sm:text-3xl lg:text-4xl p-8 cursor-pointer"
         onClick={() => navigate("/")}
         title="ホームに戻る"
       >
