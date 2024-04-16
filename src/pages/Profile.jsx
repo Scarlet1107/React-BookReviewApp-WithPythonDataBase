@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Header } from "../components/Header";
 import { useCookies } from "react-cookie";
 import { useState } from "react";
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 
 export const Profile = () => {
   const navigate = useNavigate();
+  const inputRef = useRef();
   const apiUrl = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["token"]);
   const [userName, setUsername] = useState("");
@@ -35,6 +36,10 @@ export const Profile = () => {
     fetchUserName();
   }, [apiUrl, cookies.token]);
 
+  useEffect(() => {
+    inputRef.current.select();
+  }, []);
+
   const handleEditProfile = async (userName) => {
     if (userName === "") return;
     const res = await fetch(`${apiUrl}/users`, {
@@ -53,7 +58,6 @@ export const Profile = () => {
     alert("ユーザー名を変更しました");
     navigate("/home");
   };
-
   return (
     <>
       <Header />
@@ -62,10 +66,12 @@ export const Profile = () => {
       </h1>
       <div className="flex justify-center mt-10">
         <input
+          ref={inputRef}
           className="bg-gray-200 px-4 py-2 rounded w-50% mr-10"
           type="text"
           onChange={(e) => setUsername(e.target.value)}
-          value = {userName}
+          value={userName}
+          onClick={() => inputRef.current.select()}
         />
         <button
           onClick={() => handleEditProfile(userName)}

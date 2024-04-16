@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { useState } from "react";
 import React from "react";
 import Pagination from "./Pagination";
+import { useNavigate } from "react-router-dom";
 
 // SWRを使用して、本の一覧を取得するコンポーネント
 // Home.jsxで使用
@@ -11,6 +12,7 @@ const BookReviewList = () => {
   const apiUrl = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["token"]);
   const [page, setPage] = useState(0);
+  const navigate = useNavigate();
 
   async function fetcher(key) {
     const res = await fetch(key, {
@@ -44,6 +46,7 @@ const BookReviewList = () => {
             <div
               key={book.id}
               className="flex flex-col items-center justify-center p-4 border rounded shadow h-24 transform transition duration-50 ease-in-out hover:scale-105 hover:shadow-lg overflow-hidden"
+              onClick={() => navigate(`/detail/${book.id}`)}
             >
               {/* 長過ぎるタイトルは”タイトル...”みたいに省略して書きたい */}
               <h2 className="text-xl">

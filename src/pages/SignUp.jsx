@@ -1,6 +1,6 @@
 import axios from "axios";
 import Compressor from "compressorjs";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,9 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const auth = useSelector((state) => state.auth.isSignIn);
   const dispatch = useDispatch();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const userNameRef = useRef();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -143,25 +146,31 @@ export const SignUp = () => {
           <label className="m-8">メールアドレス</label>
           <br />
           <input
+            ref={emailRef}
             type="email"
             onChange={handleEmailChange}
             className="input-box"
+            onClick={() => emailRef.current.select()}
           />
           <br />
           <label>ユーザ名</label>
           <br />
           <input
+            ref={userNameRef}
             type="text"
             onChange={handleNameChange}
             className="input-box"
+            onClick={ () => userNameRef.current.select()}
           />
           <br />
           <label className="">パスワード</label>
           <br />
           <input
+            ref={passwordRef}
             type="password"
             onChange={handlePasswordChange}
             className="input-box"
+            onClick={() => passwordRef.current.select()}
           />
           <br />
           <p className="mt-4 mb-2 ">アイコンをアップロード</p>
@@ -177,8 +186,8 @@ export const SignUp = () => {
           >
             作成
           </button>
-        </form> 
+        </form>
       </main>
-    </div>  
-  ); 
+    </div>
+  );
 };
