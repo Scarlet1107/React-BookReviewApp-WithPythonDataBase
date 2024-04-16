@@ -40,7 +40,7 @@ export const Header = () => {
 
       // You can now use the UserNameContext in other components by importing it
       // For example:
-      // import { UserNameContext } from "../path/to/UserNameContext";  
+      // import { UserNameContext } from "../path/to/UserNameContext";
     }
   }
 
@@ -60,6 +60,7 @@ export const Header = () => {
       <h1
         className="justify-start font-bold text-4xl p-8 cursor-pointer"
         onClick={() => navigate("/")}
+        title="ホームに戻る"
       >
         書籍レビューアプリ
       </h1>
@@ -70,6 +71,7 @@ export const Header = () => {
             <span
               className="font-bold cursor-pointer"
               onClick={() => handleEditProfile()}
+              title="プロフィールを編集する"
             >
               {" "}
               {data && data.name}{" "}
