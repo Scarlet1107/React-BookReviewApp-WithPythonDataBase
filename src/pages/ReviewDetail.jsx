@@ -3,11 +3,13 @@ import { Header } from "../components/Header";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const ReviewDetail = () => {
   const { id } = useParams();
   const apiUrl = process.env.REACT_APP_API_URL;
   const [cookies] = useCookies(["token"]);
+  const navigate = useNavigate();
 
   const fetcher = async (key) => {
     const response = await fetch(key, {
@@ -63,7 +65,14 @@ export const ReviewDetail = () => {
                 実際に読んでみる
               </a>
               {data.isMine ? (
-                <p className="mt-32">このレビューはあなたが書いたものです</p>
+                <div>
+                  <p className="mt-32">このレビューはあなたが書いたものです</p>
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded p-2"
+                  onClick={() => navigate(`/edit/${id}`)}
+                  >
+                    クリックして編集
+                  </button>
+                </div>
               ) : (
                 <p className="mt-32">
                   このレビューは{" "}

@@ -9,6 +9,7 @@ import { WelcomePage } from "../pages/WelcomePage";
 import { Profile } from "../pages/Profile";
 import { NewReview } from "../pages/NewReview";
 import { ReviewDetail } from "../pages/ReviewDetail";
+import { EditReview } from "../pages/EditReview";
 
 export const Router = () => {
   const auth = useSelector((state) => state.auth.isSignIn);
@@ -23,6 +24,7 @@ export const Router = () => {
             <Route path="/profile" element={<Profile />} />
             <Route path="/new" element={<NewReview />} />
             <Route path="/detail/:id" element={<ReviewDetail />} />
+            <Route path="edit/:id" element={<EditReview />} />
             <Route path="*" element={<Navigate to="/home" />} />
           </>
         ) : (
