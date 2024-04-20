@@ -10,7 +10,7 @@ export const NewReview = () => {
   const [bookName, setBookName] = useState("");
   const [detail, setDetail] = useState("");
   const [review, setReview] = useState("");
-  const [url, setUrl] = useState("test");
+  const [url, setUrl] = useState("");
   const [cookies] = useCookies(["token"]);
   const navigate = useNavigate();
 
