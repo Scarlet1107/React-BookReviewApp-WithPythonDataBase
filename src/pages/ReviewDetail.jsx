@@ -67,8 +67,9 @@ export const ReviewDetail = () => {
               {data.isMine ? (
                 <div>
                   <p className="mt-32">このレビューはあなたが書いたものです</p>
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded p-2"
-                  onClick={() => navigate(`/edit/${id}`)}
+                  <button
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded p-2"
+                    onClick={() => navigate(`/edit/${id}`)}
                   >
                     クリックして編集
                   </button>

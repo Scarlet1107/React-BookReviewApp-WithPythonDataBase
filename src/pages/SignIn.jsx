@@ -67,7 +67,7 @@ export const SignIn = () => {
           <button
             type="button"
             className="button bg-blue-500 p-4"
-            onClick={() =>onSignIn()}
+            onClick={() => onSignIn()}
           >
             サインイン
           </button>

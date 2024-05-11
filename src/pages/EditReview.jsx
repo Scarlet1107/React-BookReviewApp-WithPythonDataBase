@@ -24,9 +24,17 @@ export const EditReview = () => {
       },
     })
       .then((response) => response.json())
-      .then((data) => setData(data))
+      .then((data) => setInitialData(data))
       .catch((error) => console.error(error));
   }, [apiUrl, id, cookies.token]);
+
+  const setInitialData = (data) => {
+    setData(data);
+    setBookName(data.title);
+    setDetail(data.detail);
+    setUrl(data.url);
+    setReview(data.review);
+  };
 
   const handleBookNameChange = (e) => {
     setBookName(e);
